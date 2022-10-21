@@ -1,5 +1,5 @@
 set /p filename= "File name: "
-
+your mom
 cd ./
 
 avr-as -g -mmcu=atmega328p -o "%filename%.o" "%filename%.s"
