@@ -1,16 +1,26 @@
 set /p filename= "File name: "
+set /p port= "COM Port: "
 
 cd ./
 
-avr-as -g -mmcu=atmega328p -o "%filename%.o" "%filename%.s"
+mkdir %filename%
 
-avr-ld -o ".\%filename%.elf" "%filename%.o"
+move %filename%.s ./%filename%/
 
-avr-objcopy -O ihex -R .eeprom "%filename%.elf" "%filename%.hex"
+cd %filename%
 
+avr-as -g -mmcu=atmega328p -o %filename%.o %filename%.s
 
+avr-ld -o .\%filename%.elf %filename%.o
 
-avrdude -C "C:\Program Files (x86)\bin\avrdude.conf" -p atmega328p -c arduino -P "COM7" -D -U flash:w:"%filename%.hex":i
+avr-objcopy -O ihex -R .eeprom %filename%.elf %filename%.hex
 
+where avrdude > tmpFile 
+set /p path= < tmpFile 
+del tmpFile 
+
+set path=%path:avrdude.exe=avrdude.conf%
+
+avrdude -C %path% -p atmega328p -c arduino -P %port% -D -U flash:w:%filename%.hex:i
 
 pause
