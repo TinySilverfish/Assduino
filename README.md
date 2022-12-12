@@ -3,5 +3,5 @@
 Use to call the aseembler and write to memory.
 
 
-Credit:
+Special thanks:
 KonyAHS - https://github.com/KonyAHS
